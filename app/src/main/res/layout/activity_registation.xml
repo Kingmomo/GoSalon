@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email"
+            style="@style/LoginSignUp5Input"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/nama"
+            style="@style/LoginSignUp5Input"
+            android:hint="Nama Lengkap" />
+
+        <EditText
+            android:id="@+id/telp"
+            style="@style/LoginSignUp5Input"
+            android:hint="No Telpon"
+            android:inputType="number"/>
+
+
+        <EditText
+            android:id="@+id/alamat"
+            style="@style/LoginSignUp6Input"
+            android:hint="Alamat"
+            android:inputType="textMultiLine" />
+
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/LoginSignUp5Input"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/password2"
+            style="@style/LoginSignUp5Input"
+            android:hint="Confirm Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_register"
+            style="@style/ButtonOrange"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:onClick="onClick"
+            android:text="Buat Akun"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
+
+</ScrollView>

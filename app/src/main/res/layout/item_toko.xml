@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/gambatoko"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/item_toko" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_gradient"
+                android:text="Salon Intan"/>
+
+            <TextView
+                android:id="@+id/namatoko"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="50sp"
+                android:fontFamily="@font/dancing_script"
+                android:text="Salon Intan"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/gambatoko"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+
+
+                <Button
+                    android:id="@+id/btn_tentangsalon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:padding="4dp"
+                    android:background="@drawable/solid_button"
+                    android:drawableLeft="@drawable/salon"
+                    android:text="Lihat Salon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:layout_marginRight="6dp"
+                    />
+
+                <Button
+                    android:id="@+id/btn_pesan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:padding="4dp"
+                    android:background="@drawable/solid_button"
+                    android:drawableLeft="@drawable/buy"
+                    android:text="Pesan Produk"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
