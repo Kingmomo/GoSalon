@@ -10,44 +10,49 @@
 
         <EditText
             android:id="@+id/email"
-            style="@style/LoginSignUp5Input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:hint="Email"
             android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/nama"
-            style="@style/LoginSignUp5Input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:hint="Nama Lengkap" />
 
         <EditText
             android:id="@+id/telp"
-            style="@style/LoginSignUp5Input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:hint="No Telpon"
             android:inputType="number"/>
 
 
         <EditText
             android:id="@+id/alamat"
-            style="@style/LoginSignUp6Input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:hint="Alamat"
             android:inputType="textMultiLine" />
 
 
         <EditText
             android:id="@+id/password"
-            style="@style/LoginSignUp5Input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:hint="Password"
             android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/password2"
-            style="@style/LoginSignUp5Input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:hint="Confirm Password"
             android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btn_register"
-            style="@style/ButtonOrange"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:layout_gravity="center_horizontal"

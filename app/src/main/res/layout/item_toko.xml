@@ -26,12 +26,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/item_toko" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@drawable/bg_gradient"
-                android:text="Salon Intan"/>
-
             <TextView
                 android:id="@+id/namatoko"
                 android:layout_width="match_parent"

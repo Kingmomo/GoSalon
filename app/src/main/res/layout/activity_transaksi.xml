@@ -32,12 +32,6 @@
                 android:src="@drawable/background_transaksi"
                 app:layout_collapseMode="parallax" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/bg_gradient"
-                android:fitsSystemWindows="true"
-                android:rotation="180" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -81,51 +75,58 @@
 
             <EditText
                 android:id="@+id/nama"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Nama" />
 
 
             <EditText
                 android:id="@+id/alamat"
-                style="@style/LoginSignUp6Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Alamat"
                 android:inputType="textMultiLine" />
 
             <EditText
                 android:id="@+id/notelp"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="No Telp" />
 
             <EditText
                 android:id="@+id/koordinat"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Koordinat" />
 
             <EditText
                 android:id="@+id/date"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Tanggal Order" />
 
             <EditText
                 android:id="@+id/clock"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Jam Order" />
 
             <EditText
                 android:id="@+id/paket"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Paket"
               />
 
             <EditText
                 android:id="@+id/harga"
-                style="@style/LoginSignUp5Input"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="Harga"
                 />
 
             <Button
                 android:id="@+id/btntransaksi"
-                style="@style/ButtonOrange"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_gravity="center_horizontal"
