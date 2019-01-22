@@ -19,7 +19,6 @@ import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Adapter.HistoryTransaksiAdapter;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.HistoryTransaksi;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
-import id.ac.darmajaya.gosalon.Model.Toko.ResponseToko;
 import id.ac.darmajaya.gosalon.Retrofit.client;
 import id.ac.darmajaya.gosalon.SPreferenced.SPref;
 import retrofit2.Call;

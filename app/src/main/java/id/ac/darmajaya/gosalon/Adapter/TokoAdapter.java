@@ -32,7 +32,6 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.MyViewHolder> 
     }
 
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,9 +41,9 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
-        DataToko dataToko=  dataTokos.get(position);
+        DataToko dataToko = dataTokos.get(position);
         myViewHolder.namatoko.setText(dataToko.getNama_toko());
-        if (dataToko.getGambar() != null){
+        if (dataToko.getGambar() != null) {
             Glide.with(context).load(dataToko.getGambar()).into(myViewHolder.gambattoko);
         }
 

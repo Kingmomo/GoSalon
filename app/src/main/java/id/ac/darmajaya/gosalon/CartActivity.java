@@ -1,16 +1,9 @@
 package id.ac.darmajaya.gosalon;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -20,14 +13,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import id.ac.darmajaya.gosalon.Adapter.CartAdapter;
 import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
 import id.ac.darmajaya.gosalon.SPreferenced.MySharedPreference;
+import id.ac.darmajaya.gosalon.utils.SimpleDividerItemDecoration;
 
 public class CartActivity extends AppCompatActivity {
-    private MySharedPreference sharedPreference;
-    private Gson gson;
-    private int cartProductNumber = 0;
 
+    private RecyclerView checkRecyclerView;
+    private TextView subTotal;
+    private double mSubTotal = 0;
 
 
     @Override
@@ -35,97 +30,86 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        sharedPreference = new MySharedPreference(CartActivity.this);
+        subTotal = (TextView) findViewById(R.id.sub_total);
+
+        checkRecyclerView = (RecyclerView) findViewById(R.id.checkout_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CartActivity.this);
+        checkRecyclerView.setLayoutManager(linearLayoutManager);
+        checkRecyclerView.setHasFixedSize(true);
+        checkRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(CartActivity.this));
+
+        // get content of cart
+        MySharedPreference mShared = new MySharedPreference(CartActivity.this);
+
         GsonBuilder builder = new GsonBuilder();
-        gson = builder.create();
+        Gson gson = builder.create();
 
-        String productInStringFormat = getIntent().getExtras().getString("PRODUCT");
-        final DataProduk singleProduct = gson.fromJson(productInStringFormat, DataProduk.class);
+        DataProduk[] addCartProducts = gson.fromJson(mShared.retrieveProductFromCart(), DataProduk[].class);
+        final List<DataProduk> productList = convertObjectArrayToListObject(addCartProducts);
 
-        Button addToCartButton = (Button)findViewById(R.id.add_to_cart);
+        CartAdapter mAdapter = new CartAdapter(CartActivity.this, productList);
+        checkRecyclerView.setAdapter(mAdapter);
 
-        addToCartButton.setOnClickListener(new View.OnClickListener() {
+        mSubTotal = getTotalPrice(productList);
+        subTotal.setText("Subtotal excluding tax and shipping: " + String.valueOf(mSubTotal) + " $");
+
+
+/*        Button shoppingButton = (Button)findViewById(R.id.shopping);
+        assert shoppingButton != null;
+        shoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //increase product count
-                String productsFromCart = sharedPreference.retrieveProductFromCart();
-                if(productsFromCart.equals("")){
-                    List<DataProduk> cartProductList = new ArrayList<DataProduk>();
-                    cartProductList.add(singleProduct);
-                    String cartValue = gson.toJson(cartProductList);
-                    sharedPreference.addProductToTheCart(cartValue);
-                    cartProductNumber = cartProductList.size();
-                }else{
-                    String productsInCart = sharedPreference.retrieveProductFromCart();
-                    DataProduk[] storedProducts = gson.fromJson(productsInCart, DataProduk[].class);
-
-                    List<DataProduk> allNewProduct = convertObjectArrayToListObject(storedProducts);
-                    allNewProduct.add(singleProduct);
-                    String addAndStoreNewProduct = gson.toJson(allNewProduct);
-                    sharedPreference.addProductToTheCart(addAndStoreNewProduct);
-                    cartProductNumber = allNewProduct.size();
-                }
-                sharedPreference.addProductCount(cartProductNumber);
-                invalidateCart();
+                Intent shoppingIntent = new Intent(CartActivity.this, ShoppingActivity.class);
+                startActivity(shoppingIntent);
             }
         });
+
+        Button checkButton = (Button)findViewById(R.id.checkout);
+        assert checkButton != null;
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent paymentIntent = new Intent(CartActivity.this, PayPalCheckoutActivity.class);
+                paymentIntent.putExtra("TOTAL_PRICE", mSubTotal);
+                startActivity(paymentIntent);
+            }
+        });*/
+
+
+        mAdapter.setOnDataChangeListener(new CartAdapter.OnDataChangeListener() {
+            public void onDataChanged(double size) {
+                subTotal.setText("Subtotal excluding tax and shipping: " + String.valueOf(size) + " $");
+
+            }
+        });
+
+
     }
 
-    private List<DataProduk> convertObjectArrayToListObject(DataProduk[] allProducts){
+    private List<DataProduk> convertObjectArrayToListObject(DataProduk[] allProducts) {
         List<DataProduk> mProduct = new ArrayList<DataProduk>();
         Collections.addAll(mProduct, allProducts);
         return mProduct;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_shop);
-        int mCount = sharedPreference.retrieveProductCount();
-        menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.cart));
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_shop) {
-            Intent checkoutIntent = new Intent(CartActivity.this, TransaksiActivity.class);
-            startActivity(checkoutIntent);
-            return true;
+    private int returnQuantityByProductName(String productName, List<DataProduk> mProducts) {
+        int quantityCount = 0;
+        for (int i = 0; i < mProducts.size(); i++) {
+            DataProduk pObject = mProducts.get(i);
+            if (pObject.getNama_produk().trim().equals(productName.trim())) {
+                quantityCount++;
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return quantityCount;
     }
 
-    private Drawable buildCounterDrawable(int count, int backgroundImageId) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.shopping_layout, null);
-        view.setBackgroundResource(backgroundImageId);
-
-        if (count == 0) {
-            View counterTextPanel = view.findViewById(R.id.counterValuePanel);
-            counterTextPanel.setVisibility(View.GONE);
-        } else {
-            TextView textView = (TextView) view.findViewById(R.id.count);
-            textView.setText("" + count);
+    private double getTotalPrice(List<DataProduk> mProducts) {
+        double totalCost = 0;
+        for (int i = 0; i < mProducts.size(); i++) {
+            DataProduk pObject = mProducts.get(i);
+            totalCost = totalCost + Integer.parseInt(pObject.getHarga_produk());
         }
-
-        view.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-
-        view.setDrawingCacheEnabled(true);
-        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-        view.setDrawingCacheEnabled(false);
-
-        return new BitmapDrawable(getResources(), bitmap);
+        return totalCost;
     }
 
-    private void invalidateCart() {
-        invalidateOptionsMenu();
-    }
 }

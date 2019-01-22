@@ -38,20 +38,24 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TransaksiActivity extends AppCompatActivity {
-    private CheckBox combobox;
-    private EditText nama, alamat, notelp, paket, harga, koordinat, edDate, edClock;
-    private Button btntranskasi;
-    private DatePickerDialog mDatePickerDialog;
     Calendar calendar;
     int currentHour;
     int currentMinute;
     TimePickerDialog timePickerDialog;
     String amPm;
+    private CheckBox combobox;
+    private EditText nama, alamat, notelp, paket, harga, koordinat, edDate, edClock;
+    private Button btntranskasi;
+    private DatePickerDialog mDatePickerDialog;
     private ProgressBar progress_bar;
     private ProgressDialog pDialog;
     private Context mContext;
     private int MAP = 2;
 
+    public static void dismissKeyboard(EditText editText, Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,13 +82,12 @@ public class TransaksiActivity extends AppCompatActivity {
         combobox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (combobox.isChecked()){
+                if (combobox.isChecked()) {
                     nama.setText(Prefs.getString(SPref.getNama(), null));
                     alamat.setText(Prefs.getString(SPref.getAlamat(), null));
                     notelp.setText(Prefs.getString(SPref.getTelp(), null));
 
-                }
-                else {
+                } else {
                     nama.setText("");
                     alamat.setText("");
                     notelp.setText("");
@@ -125,13 +128,13 @@ public class TransaksiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate_login())
-                posttransaksi();
+                    posttransaksi();
             }
         });
         koordinat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivityForResult(intent, MAP);
             }
         });
@@ -139,16 +142,10 @@ public class TransaksiActivity extends AppCompatActivity {
     }
 
     private boolean validate_login() {
-        return (!Validate.cek(nama)&&!Validate.cek(alamat)&&!Validate.cek(notelp)&&!Validate.cek(koordinat)&&!Validate.cek(edClock)&&!Validate.cek(edDate)) ? true : false;
+        return (!Validate.cek(nama) && !Validate.cek(alamat) && !Validate.cek(notelp) && !Validate.cek(koordinat) && !Validate.cek(edClock) && !Validate.cek(edDate)) ? true : false;
     }
 
-
-    public static void dismissKeyboard(EditText editText, Context context) {
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
-
-    private void setwaktu(){
+    private void setwaktu() {
         calendar = Calendar.getInstance();
         currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         currentMinute = calendar.get(Calendar.MINUTE);
@@ -187,7 +184,7 @@ public class TransaksiActivity extends AppCompatActivity {
         mDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
     }
 
-    public void posttransaksi(){
+    public void posttransaksi() {
         pDialog = new ProgressDialog(this);
         //  pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setMessage("Loading");
@@ -213,21 +210,20 @@ public class TransaksiActivity extends AppCompatActivity {
                 "0"
         );
 
-        Call<ResponTransaksi> user=client.getApi().posttransaksi(Prefs.getString(SPref.getEmail(), null), Prefs.getString(SPref.getPassword(), null), dataTransaksi);
+        Call<ResponTransaksi> user = client.getApi().posttransaksi(Prefs.getString(SPref.getEmail(), null), Prefs.getString(SPref.getPassword(), null), dataTransaksi);
         user.enqueue(new Callback<ResponTransaksi>() {
             @Override
             public void onResponse(Call<ResponTransaksi> call, Response<ResponTransaksi> response) {
                 pDialog.hide();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     System.out.println("Transaksi Sukses " + response.code());
-                    Toasty.success(mContext,"Transaksi Berhasil",Toast.LENGTH_LONG).show();
+                    Toasty.success(mContext, "Transaksi Berhasil", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(TransaksiActivity.this, MainActivity.class));
                     finish();
 
 
-
-                }else{
-                    Toasty.error(mContext,"Koneksi Tidak ada",Toast.LENGTH_LONG).show();
+                } else {
+                    Toasty.error(mContext, "Koneksi Tidak ada", Toast.LENGTH_LONG).show();
                     System.out.println("data user " + response.code());
                 }
 
@@ -236,7 +232,7 @@ public class TransaksiActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponTransaksi> call, Throwable t) {
                 pDialog.hide();
-                Toasty.error(mContext,"Koneksi Tidak ada",Toast.LENGTH_LONG).show();
+                Toasty.error(mContext, "Koneksi Tidak ada", Toast.LENGTH_LONG).show();
                 if (pDialog.isShowing())
                     pDialog.dismiss();
                 System.out.println("data user" + t.getMessage());
@@ -246,21 +242,18 @@ public class TransaksiActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       if(requestCode == MAP)
-        {
+        if (requestCode == MAP) {
    /*         double lat = (double) data.getExtras().get("location_lat");
             double lng = (double) data.getExtras().get("location_lng");
             System.out.println("mantap soul "+ lat +" "+ lng);*/
-            if (resultCode == Activity.RESULT_OK)
-            {
+            if (resultCode == Activity.RESULT_OK) {
                 double lat = (double) data.getDoubleExtra("location_lat", 0);
                 double lng = (double) data.getDoubleExtra("location_lng", 0);
-                System.out.println("mantap soul "+ lat +" "+ lng);
-                koordinat.setText(String.valueOf(lat)+", "+String.valueOf(lng));
+                System.out.println("mantap soul " + lat + " " + lng);
+                koordinat.setText(String.valueOf(lat) + ", " + String.valueOf(lng));
             }
 
 

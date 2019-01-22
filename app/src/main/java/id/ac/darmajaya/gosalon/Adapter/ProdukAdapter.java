@@ -1,9 +1,7 @@
 package id.ac.darmajaya.gosalon.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,13 +16,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import id.ac.darmajaya.gosalon.CartActivity;
 import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
+import id.ac.darmajaya.gosalon.ProdukActivity;
 import id.ac.darmajaya.gosalon.R;
-import id.ac.darmajaya.gosalon.TransaksiActivity;
+import id.ac.darmajaya.gosalon.SPreferenced.MySharedPreference;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -32,6 +32,10 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
 
     private Context context;
     private List<DataProduk> dataProduks;
+    private MySharedPreference sharedPreference;
+    private Gson gson;
+    private int cartProductNumber = 0;
+
 
     public ProdukAdapter(Context context, List<DataProduk> dataProduks) {
         this.context = context;
@@ -46,7 +50,7 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int position) {
         final DataProduk dataProduk = dataProduks.get(position);
         myViewHolder.namaproduk.setText(dataProduk.getNama_produk());
         myViewHolder.waktupengerjaan.setText(dataProduk.getWaktu_pengerjaan());
@@ -61,15 +65,12 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
                 .error(R.mipmap.ic_launcher_round);
 
 
-
         Glide.with(context).load(dataProduk.getFoto_produk()).apply(options).into(myViewHolder.gambar);
 
         myViewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DataProduk singleProduct = dataProduks.get(position);
-
-
+ /*
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.create();
 
@@ -78,7 +79,37 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
                 Intent intent = new Intent(context, CartActivity.class);
                 intent.putExtra("PRODUCT", stringObjectRepresentation);
                 setSharedPreference(dataProduk.getId_toko(), dataProduk.getId(), dataProduk.getNama_produk(), dataProduk.getHarga_produk());
-                context.startActivity(intent);
+                context.startActivity(intent);*/
+
+
+                sharedPreference = new MySharedPreference(context);
+                GsonBuilder builder = new GsonBuilder();
+                gson = builder.create();
+
+                String singleProductt = gson.toJson(dataProduk);
+                final DataProduk singleProduct = gson.fromJson(singleProductt, DataProduk.class);
+
+                //increase product count
+                String productsFromCart = sharedPreference.retrieveProductFromCart();
+                if (productsFromCart.equals("")) {
+                    List<DataProduk> cartProductList = new ArrayList<DataProduk>();
+                    cartProductList.add(singleProduct);
+                    String cartValue = gson.toJson(cartProductList);
+                    sharedPreference.addProductToTheCart(cartValue);
+                    cartProductNumber = cartProductList.size();
+                } else {
+                    String productsInCart = sharedPreference.retrieveProductFromCart();
+                    DataProduk[] storedProducts = gson.fromJson(productsInCart, DataProduk[].class);
+
+                    List<DataProduk> allNewProduct = convertObjectArrayToListObject(storedProducts);
+                    allNewProduct.add(singleProduct);
+                    String addAndStoreNewProduct = gson.toJson(allNewProduct);
+                    sharedPreference.addProductToTheCart(addAndStoreNewProduct);
+                    cartProductNumber = allNewProduct.size();
+                }
+                sharedPreference.addProductCount(cartProductNumber);
+                invalidateCart();
+
             }
         });
 
@@ -89,7 +120,28 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
         return dataProduks.size();
     }
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder {
+    public void setSharedPreference(String idtoko, String idproduk, String namaproduk, String harga) {
+        SharedPreferences pref = context.getSharedPreferences("TransaksiSalon", MODE_PRIVATE);
+        SharedPreferences.Editor spref = pref.edit();
+        spref.clear();
+        spref.putString("idtoko", idtoko);
+        spref.putString("idproduk", idproduk);
+        spref.putString("namaproduk", namaproduk);
+        spref.putString("harga", harga);
+        spref.commit();
+    }
+
+    private List<DataProduk> convertObjectArrayToListObject(DataProduk[] allProducts) {
+        List<DataProduk> mProduct = new ArrayList<DataProduk>();
+        Collections.addAll(mProduct, allProducts);
+        return mProduct;
+    }
+
+    private void invalidateCart() {
+        ((ProdukActivity) context).invalidateOptionsMenu();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private View view;
         private ImageView gambar;
         private TextView namaproduk, hargaproduk, waktupengerjaan;
@@ -108,17 +160,6 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
 
 
         }
-    }
-
-    public void setSharedPreference(String idtoko, String idproduk, String namaproduk, String harga){
-        SharedPreferences pref = context.getSharedPreferences("TransaksiSalon", MODE_PRIVATE);
-        SharedPreferences.Editor spref = pref.edit();
-        spref.clear();
-        spref.putString("idtoko", idtoko);
-        spref.putString("idproduk", idproduk);
-        spref.putString("namaproduk", namaproduk);
-        spref.putString("harga", harga);
-        spref.commit();
     }
 
 }
