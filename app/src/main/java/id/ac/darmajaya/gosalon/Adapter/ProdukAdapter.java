@@ -3,6 +3,7 @@ package id.ac.darmajaya.gosalon.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,11 +14,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import id.ac.darmajaya.gosalon.CartActivity;
 import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
 import id.ac.darmajaya.gosalon.R;
 import id.ac.darmajaya.gosalon.TransaksiActivity;
@@ -42,7 +46,7 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
         final DataProduk dataProduk = dataProduks.get(position);
         myViewHolder.namaproduk.setText(dataProduk.getNama_produk());
         myViewHolder.waktupengerjaan.setText(dataProduk.getWaktu_pengerjaan());
@@ -63,7 +67,16 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
         myViewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, TransaksiActivity.class);
+                final DataProduk singleProduct = dataProduks.get(position);
+
+
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+
+                String stringObjectRepresentation = gson.toJson(singleProduct);
+
+                Intent intent = new Intent(context, CartActivity.class);
+                intent.putExtra("PRODUCT", stringObjectRepresentation);
                 setSharedPreference(dataProduk.getId_toko(), dataProduk.getId(), dataProduk.getNama_produk(), dataProduk.getHarga_produk());
                 context.startActivity(intent);
             }
