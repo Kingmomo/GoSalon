@@ -122,7 +122,7 @@ public class ProdukActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_shop);
         int mCount = sharedPreference.retrieveProductCount();
-        menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.cart));
+        menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.ic_cart));
         return true;
     }
 

@@ -35,7 +35,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProdukActivity"
-            android:label="Daftar Produk" />
+            android:label="Daftar Jasa" />
         <activity
             android:name=".TransaksiActivity"
             android:theme="@style/AppTheme.NoActionBar" />

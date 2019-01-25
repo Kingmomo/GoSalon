@@ -21,7 +21,6 @@ public class SPref {
         SPref.id = id;
     }
 
-
     public static String getPassword() {
         return password;
     }

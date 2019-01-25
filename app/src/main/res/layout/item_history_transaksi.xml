@@ -1,43 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/spacing_medium">
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginRight="@dimen/spacing_large"
+        app:cardCornerRadius="@dimen/spacing_medium"
+        app:cardElevation="@dimen/spacing_small">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_medium"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/spacing_medium"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium">
 
-            <TextView
-                android:id="@+id/nama"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/people"
+                    android:drawablePadding="@dimen/spacing_medium"
+                    android:fontFamily="@font/roboto"
+                    android:text="Budi Setinto"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/notelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/phone"
+                    android:drawablePadding="@dimen/spacing_medium"
+                    android:fontFamily="@font/roboto"
+                    android:text="0812345678"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nama Pemesan: Budi Setinto" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tanggal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/spacing_medium"
+                    android:fontFamily="@font/roboto"
+                    android:text="19-08-2019"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/waktu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/time"
+                    android:drawablePadding="@dimen/spacing_medium"
+                    android:fontFamily="@font/roboto"
+                    android:text="16:40"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/notelp"
-                android:layout_width="match_parent"
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No Telp: Budi Setinto" />
-
-            <TextView
-                android:id="@+id/waktu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Waktu Pesan: Budi Setinto" />
+                android:drawableLeft="@drawable/status"
+                android:drawablePadding="@dimen/spacing_medium"
+                android:fontFamily="@font/roboto"
+                android:text="Belum Di Konfirmasi"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
-
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>

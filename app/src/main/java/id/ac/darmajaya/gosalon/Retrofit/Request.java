@@ -4,6 +4,7 @@ import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
 import id.ac.darmajaya.gosalon.Model.Transaksi.DataTransaksi;
 import id.ac.darmajaya.gosalon.Model.Produk.ResponseProduk;
 import id.ac.darmajaya.gosalon.Model.Toko.ResponseToko;
+import id.ac.darmajaya.gosalon.Model.Transaksi.PostTransaksi;
 import id.ac.darmajaya.gosalon.Model.User.ResponseLogin;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,7 +26,7 @@ public interface Request {
     Call<ResponTransaksi> gethistorytransaksi(@Query("id_user")String iduser);
 
     @POST("transaksi/post.php")
-    Call<ResponTransaksi> posttransaksi(@Query("email")String email, @Query("password") String password, @Body DataTransaksi dataTransaksi);
+    Call<ResponTransaksi> posttransaksi(@Query("email")String email, @Query("password") String password, @Body PostTransaksi dataTransaksi);
 
 
     @FormUrlEncoded

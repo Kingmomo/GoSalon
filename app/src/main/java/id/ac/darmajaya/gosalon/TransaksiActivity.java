@@ -21,16 +21,25 @@ import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
+import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
 import id.ac.darmajaya.gosalon.Model.Transaksi.DataTransaksi;
+import id.ac.darmajaya.gosalon.Model.Transaksi.ListProduk;
+import id.ac.darmajaya.gosalon.Model.Transaksi.PostTransaksi;
 import id.ac.darmajaya.gosalon.Retrofit.client;
+import id.ac.darmajaya.gosalon.SPreferenced.MySharedPreference;
 import id.ac.darmajaya.gosalon.SPreferenced.SPref;
 import id.ac.darmajaya.gosalon.utils.Validate;
 import retrofit2.Call;
@@ -38,11 +47,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TransaksiActivity extends AppCompatActivity {
-    Calendar calendar;
-    int currentHour;
-    int currentMinute;
-    TimePickerDialog timePickerDialog;
-    String amPm;
+    private Calendar calendar;
+    private int currentMinute, currentHour;
+    private TimePickerDialog timePickerDialog;
     private CheckBox combobox;
     private EditText nama, alamat, notelp, paket, harga, koordinat, edDate, edClock;
     private Button btntranskasi;
@@ -141,48 +148,6 @@ public class TransaksiActivity extends AppCompatActivity {
 
     }
 
-    private boolean validate_login() {
-        return (!Validate.cek(nama) && !Validate.cek(alamat) && !Validate.cek(notelp) && !Validate.cek(koordinat) && !Validate.cek(edClock) && !Validate.cek(edDate)) ? true : false;
-    }
-
-    private void setwaktu() {
-        calendar = Calendar.getInstance();
-        currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-        currentMinute = calendar.get(Calendar.MINUTE);
-
-        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-/*                        if (hourOfDay >= 12) {
-                            amPm = "PM";
-                        } else {
-                            amPm = "AM";
-                        }*/
-                edClock.setText(String.format("%02d:%02d", hourOfDay, minutes)/* + amPm*/);
-            }
-        }, currentHour, currentMinute, false);
-    }
-
-
-    private void setDateTimeField() {
-
-        Calendar newCalendar = Calendar.getInstance();
-        mDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-                final Date startDate = newDate.getTime();
-                String fdate = sd.format(startDate);
-
-                edDate.setText(fdate);
-
-            }
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-//            mDatePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-        mDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-    }
 
     public void posttransaksi() {
         pDialog = new ProgressDialog(this);
@@ -194,14 +159,23 @@ public class TransaksiActivity extends AppCompatActivity {
         String tanggaldate;
         tanggaldate = edDate.getText().toString() + " " + edClock.getText().toString();
 
-        final SharedPreferences spref = getApplicationContext().getSharedPreferences("TransaksiSalon", MODE_PRIVATE);
+        MySharedPreference mShared = new MySharedPreference(TransaksiActivity.this);
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        DataProduk[] addCartProducts = gson.fromJson(mShared.retrieveProductFromCart(), DataProduk[].class);
+        final List<DataProduk> productList = convertObjectArrayToListObject(addCartProducts);
+        final List<ListProduk> list = new ArrayList<>();
+        list.add(new ListProduk("1"));
+        list.add(new ListProduk("3"));
 
 
-        DataTransaksi dataTransaksi = new DataTransaksi(
+
+        PostTransaksi dataTransaksi = new PostTransaksi(
                 Prefs.getString(SPref.getId(), null),
-                spref.getString("idtoko", null),
-                spref.getString("idproduk", null),
-                spref.getString("idtoko", null),
+                productList.get(0).getId_toko(),
+                productList.get(0).getId_toko(),
+                list,
                 nama.getText().toString(),
                 alamat.getText().toString(),
                 notelp.getText().toString(),
@@ -209,6 +183,7 @@ public class TransaksiActivity extends AppCompatActivity {
                 tanggaldate,
                 "0"
         );
+
 
         Call<ResponTransaksi> user = client.getApi().posttransaksi(Prefs.getString(SPref.getEmail(), null), Prefs.getString(SPref.getPassword(), null), dataTransaksi);
         user.enqueue(new Callback<ResponTransaksi>() {
@@ -239,6 +214,54 @@ public class TransaksiActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private List<DataProduk> convertObjectArrayToListObject(DataProduk[] allProducts) {
+        List<DataProduk> mProduct = new ArrayList<DataProduk>();
+        Collections.addAll(mProduct, allProducts);
+        return mProduct;
+    }
+
+    private boolean validate_login() {
+        return (!Validate.cek(nama) && !Validate.cek(alamat) && !Validate.cek(notelp) && !Validate.cek(koordinat) && !Validate.cek(edClock) && !Validate.cek(edDate)) ? true : false;
+    }
+
+    private void setwaktu() {
+        calendar = Calendar.getInstance();
+        currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        currentMinute = calendar.get(Calendar.MINUTE);
+
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+/*                        if (hourOfDay >= 12) {
+                            amPm = "PM";
+                        } else {
+                            amPm = "AM";
+                        }*/
+                edClock.setText(String.format("%02d:%02d", hourOfDay, minutes)/* + amPm*/);
+            }
+        }, currentHour, currentMinute, false);
+    }
+
+    private void setDateTimeField() {
+
+        Calendar newCalendar = Calendar.getInstance();
+        mDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+                final Date startDate = newDate.getTime();
+                String fdate = sd.format(startDate);
+
+                edDate.setText(fdate);
+
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+//            mDatePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        mDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
     }
 
     @Override

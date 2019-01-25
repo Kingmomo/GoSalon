@@ -1,18 +1,25 @@
 package id.ac.darmajaya.gosalon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Adapter.CartAdapter;
 import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
 import id.ac.darmajaya.gosalon.SPreferenced.MySharedPreference;
@@ -22,7 +29,7 @@ public class CartActivity extends AppCompatActivity {
 
     private RecyclerView checkRecyclerView;
     private TextView subTotal;
-    private double mSubTotal = 0;
+    private int mSubTotal = 0;
 
 
     @Override
@@ -31,8 +38,10 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         subTotal = (TextView) findViewById(R.id.sub_total);
-
         checkRecyclerView = (RecyclerView) findViewById(R.id.checkout_list);
+
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CartActivity.this);
         checkRecyclerView.setLayoutManager(linearLayoutManager);
         checkRecyclerView.setHasFixedSize(true);
@@ -51,20 +60,21 @@ public class CartActivity extends AppCompatActivity {
         checkRecyclerView.setAdapter(mAdapter);
 
         mSubTotal = getTotalPrice(productList);
-        subTotal.setText("Subtotal excluding tax and shipping: " + String.valueOf(mSubTotal) + " $");
+        Locale localeID = new Locale("in", "ID");
+        final NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        subTotal.setText("Harga Total: " + (formatRupiah.format(Integer.parseInt(String.valueOf(mSubTotal)))));
 
 
-/*        Button shoppingButton = (Button)findViewById(R.id.shopping);
-        assert shoppingButton != null;
+        final Button shoppingButton = (Button)findViewById(R.id.checkout);
         shoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent shoppingIntent = new Intent(CartActivity.this, ShoppingActivity.class);
+                Intent shoppingIntent = new Intent(CartActivity.this, TransaksiActivity.class);
                 startActivity(shoppingIntent);
             }
         });
 
-        Button checkButton = (Button)findViewById(R.id.checkout);
+ /*       Button checkButton = (Button)findViewById(R.id.checkout);
         assert checkButton != null;
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +87,17 @@ public class CartActivity extends AppCompatActivity {
 
 
         mAdapter.setOnDataChangeListener(new CartAdapter.OnDataChangeListener() {
-            public void onDataChanged(double size) {
-                subTotal.setText("Subtotal excluding tax and shipping: " + String.valueOf(size) + " $");
+            public void onDataChanged(int size) {
+                subTotal.setText("Harga Total: " + (formatRupiah.format(Integer.parseInt(String.valueOf(size)))));
 
+            }
+
+            @Override
+            public void onDataVerify(Boolean cek) {
+                System.out.println("perubahan data "+ cek);
+                shoppingButton.setClickable(!cek);
+                if (!cek == false)
+                Toasty.error(CartActivity.this, "Jasa tidak boleh beda toko dalam 1 transaksi", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -103,13 +121,16 @@ public class CartActivity extends AppCompatActivity {
         return quantityCount;
     }
 
-    private double getTotalPrice(List<DataProduk> mProducts) {
-        double totalCost = 0;
+    private int getTotalPrice(List<DataProduk> mProducts) {
+        int totalCost = 0;
         for (int i = 0; i < mProducts.size(); i++) {
             DataProduk pObject = mProducts.get(i);
             totalCost = totalCost + Integer.parseInt(pObject.getHarga_produk());
         }
         return totalCost;
     }
+
+
+
 
 }

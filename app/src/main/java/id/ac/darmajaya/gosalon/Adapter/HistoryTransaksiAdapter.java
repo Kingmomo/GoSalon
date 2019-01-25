@@ -45,7 +45,7 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private View view;
-        private TextView nama, notelp, waktu;
+        private TextView nama, notelp, waktu, tanggal, status;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,6 +53,8 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
             nama = view.findViewById(R.id.nama);
             notelp = view.findViewById(R.id.notelp);
             waktu = view.findViewById(R.id.waktu);
+            tanggal = view.findViewById(R.id.tanggal);
+            status = view.findViewById(R.id.status);
 
 
         }
