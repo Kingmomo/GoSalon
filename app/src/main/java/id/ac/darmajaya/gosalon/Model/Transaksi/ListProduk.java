@@ -1,6 +1,9 @@
 package id.ac.darmajaya.gosalon.Model.Transaksi;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ListProduk {
+    @SerializedName("id_produk")
     private String idproduk;
 
     public ListProduk() {

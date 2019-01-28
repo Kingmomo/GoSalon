@@ -6,54 +6,115 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_large"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/email"
-            style="@style/LoginSignUp5Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/loginSignup2InputBg"
+            android:gravity="left"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/nama"
-            style="@style/LoginSignUp5Input"
-            android:hint="Nama Lengkap" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/loginSignup2InputBg"
+            android:gravity="left"
+            android:hint="Nama Lengkap"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/telp"
-            style="@style/LoginSignUp5Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/loginSignup2InputBg"
+            android:gravity="left"
             android:hint="No Telpon"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+            android:textSize="14sp" />
 
 
         <EditText
             android:id="@+id/alamat"
-            style="@style/LoginSignUp6Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/loginSignup2InputBg"
+            android:gravity="left"
             android:hint="Alamat"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+            android:textSize="14sp" />
 
 
         <EditText
             android:id="@+id/password"
-            style="@style/LoginSignUp5Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/loginSignup2InputBg"
+            android:gravity="left"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/password2"
-            style="@style/LoginSignUp5Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/loginSignup2InputBg"
+            android:gravity="left"
             android:hint="Confirm Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_register"
-            style="@style/ButtonOrange"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/colorPrimary"
             android:onClick="onClick"
             android:text="Buat Akun"
             android:textAllCaps="false"

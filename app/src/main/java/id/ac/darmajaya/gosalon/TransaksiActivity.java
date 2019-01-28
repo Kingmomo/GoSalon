@@ -35,7 +35,6 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
 import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
-import id.ac.darmajaya.gosalon.Model.Transaksi.DataTransaksi;
 import id.ac.darmajaya.gosalon.Model.Transaksi.ListProduk;
 import id.ac.darmajaya.gosalon.Model.Transaksi.PostTransaksi;
 import id.ac.darmajaya.gosalon.Retrofit.client;
@@ -163,19 +162,24 @@ public class TransaksiActivity extends AppCompatActivity {
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
+
         DataProduk[] addCartProducts = gson.fromJson(mShared.retrieveProductFromCart(), DataProduk[].class);
         final List<DataProduk> productList = convertObjectArrayToListObject(addCartProducts);
         final List<ListProduk> list = new ArrayList<>();
-        list.add(new ListProduk("1"));
-        list.add(new ListProduk("3"));
 
+        for (int i = 0; i < productList.size(); i++) {
+            list.add(new ListProduk(productList.get(i).getId()));
+
+        }
+        long millis = new Date().getTime();
 
 
         PostTransaksi dataTransaksi = new PostTransaksi(
+                String.valueOf(millis),
                 Prefs.getString(SPref.getId(), null),
                 productList.get(0).getId_toko(),
-                productList.get(0).getId_toko(),
                 list,
+                productList.get(0).getId_toko(),
                 nama.getText().toString(),
                 alamat.getText().toString(),
                 notelp.getText().toString(),
@@ -221,6 +225,7 @@ public class TransaksiActivity extends AppCompatActivity {
         Collections.addAll(mProduct, allProducts);
         return mProduct;
     }
+
 
     private boolean validate_login() {
         return (!Validate.cek(nama) && !Validate.cek(alamat) && !Validate.cek(notelp) && !Validate.cek(koordinat) && !Validate.cek(edClock) && !Validate.cek(edDate)) ? true : false;
@@ -269,9 +274,7 @@ public class TransaksiActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == MAP) {
-   /*         double lat = (double) data.getExtras().get("location_lat");
-            double lng = (double) data.getExtras().get("location_lng");
-            System.out.println("mantap soul "+ lat +" "+ lng);*/
+
             if (resultCode == Activity.RESULT_OK) {
                 double lat = (double) data.getDoubleExtra("location_lat", 0);
                 double lng = (double) data.getDoubleExtra("location_lng", 0);

@@ -76,8 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
-
-
+                garageLocation = latLng;
                 moveCamera(latLng, DEFAULT_ZOOM);
             }
         });

@@ -1,12 +1,17 @@
 package id.ac.darmajaya.gosalon.Model.Transaksi;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class PostTransaksi {
+    @SerializedName("id")
+    private String idtransaksi;
     private String id_user;
     private String id_toko;
-    private String id_karyawan;
+    @SerializedName("produk")
     private List<ListProduk> listproduk;
+    private String id_karyawan;
     private String nama;
     private String alamat;
     private String telp;
@@ -15,17 +20,26 @@ public class PostTransaksi {
     private String status;
 
 
-    public PostTransaksi(String id_user, String id_toko, String id_karyawan, List<ListProduk> listproduk, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String status) {
+    public PostTransaksi(String idtransaksi, String id_user, String id_toko, List<ListProduk> listproduk, String id_karyawan, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String status) {
+        this.idtransaksi = idtransaksi;
         this.id_user = id_user;
         this.id_toko = id_toko;
-        this.id_karyawan = id_karyawan;
         this.listproduk = listproduk;
+        this.id_karyawan = id_karyawan;
         this.nama = nama;
         this.alamat = alamat;
         this.telp = telp;
         this.kordinat = kordinat;
         this.waktu_pemesanan = waktu_pemesanan;
         this.status = status;
+    }
+
+    public String getIdtransaksi() {
+        return idtransaksi;
+    }
+
+    public void setIdtransaksi(String idtransaksi) {
+        this.idtransaksi = idtransaksi;
     }
 
     public String getId_user() {
@@ -44,20 +58,20 @@ public class PostTransaksi {
         this.id_toko = id_toko;
     }
 
-    public String getId_karyawan() {
-        return id_karyawan;
-    }
-
-    public void setId_karyawan(String id_karyawan) {
-        this.id_karyawan = id_karyawan;
-    }
-
     public List<ListProduk> getListproduk() {
         return listproduk;
     }
 
     public void setListproduk(List<ListProduk> listproduk) {
         this.listproduk = listproduk;
+    }
+
+    public String getId_karyawan() {
+        return id_karyawan;
+    }
+
+    public void setId_karyawan(String id_karyawan) {
+        this.id_karyawan = id_karyawan;
     }
 
     public String getNama() {
