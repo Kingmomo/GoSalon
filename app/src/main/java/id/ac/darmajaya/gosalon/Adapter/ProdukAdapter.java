@@ -120,16 +120,6 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
         return dataProduks.size();
     }
 
-    public void setSharedPreference(String idtoko, String idproduk, String namaproduk, String harga) {
-        SharedPreferences pref = context.getSharedPreferences("TransaksiSalon", MODE_PRIVATE);
-        SharedPreferences.Editor spref = pref.edit();
-        spref.clear();
-        spref.putString("idtoko", idtoko);
-        spref.putString("idproduk", idproduk);
-        spref.putString("namaproduk", namaproduk);
-        spref.putString("harga", harga);
-        spref.commit();
-    }
 
     private List<DataProduk> convertObjectArrayToListObject(DataProduk[] allProducts) {
         List<DataProduk> mProduct = new ArrayList<DataProduk>();

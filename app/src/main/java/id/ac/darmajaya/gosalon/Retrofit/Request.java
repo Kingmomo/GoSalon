@@ -1,7 +1,6 @@
 package id.ac.darmajaya.gosalon.Retrofit;
 
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
-import id.ac.darmajaya.gosalon.Model.Transaksi.DataTransaksi;
 import id.ac.darmajaya.gosalon.Model.Produk.ResponseProduk;
 import id.ac.darmajaya.gosalon.Model.Toko.ResponseToko;
 import id.ac.darmajaya.gosalon.Model.Transaksi.PostTransaksi;
@@ -23,7 +22,7 @@ public interface Request {
 
 
     @GET("transaksi/get.php")
-    Call<ResponTransaksi> gethistorytransaksi(@Query("id_user")String iduser);
+    Call<ResponTransaksi> gettransaksi(@Query("id_user")String iduser);
 
     @POST("transaksi/post.php")
     Call<ResponTransaksi> posttransaksi(@Query("email")String email, @Query("password") String password, @Body PostTransaksi dataTransaksi);

@@ -1,11 +1,16 @@
 package id.ac.darmajaya.gosalon.Model.HistoryTransaksi;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class ResponTransaksi {
 
     private String message;
-    private List<HistoryTransaksi> data;
+    @SerializedName("data")
+    @Expose
+    private List<GetTransaksi> data;
 
     public String getMessage() {
         return message;
@@ -15,11 +20,11 @@ public class ResponTransaksi {
         this.message = message;
     }
 
-    public List<HistoryTransaksi> getData() {
+    public List<GetTransaksi> getData() {
         return data;
     }
 
-    public void setData(List<HistoryTransaksi> data) {
+    public void setData(List<GetTransaksi> data) {
         this.data = data;
     }
 }

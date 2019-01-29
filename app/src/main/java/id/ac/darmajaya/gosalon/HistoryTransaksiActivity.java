@@ -12,12 +12,11 @@ import android.widget.Toast;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Adapter.HistoryTransaksiAdapter;
-import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.HistoryTransaksi;
+import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.GetTransaksi;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
 import id.ac.darmajaya.gosalon.Retrofit.client;
 import id.ac.darmajaya.gosalon.SPreferenced.SPref;
@@ -25,10 +24,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static id.ac.darmajaya.gosalon.utils.Common.commonTransaksiList;
+
 public class HistoryTransaksiActivity extends AppCompatActivity {
     private RecyclerView recyclerview;
     private HistoryTransaksiAdapter adapter;
-    private List<HistoryTransaksi> historyTransaksi = new ArrayList<>();
+    private List<GetTransaksi> getTransaksi = new ArrayList<>();
     private ResponTransaksi responTransaksi;
     private ProgressDialog pDialog;
     private Context mContext;
@@ -47,14 +48,13 @@ public class HistoryTransaksiActivity extends AppCompatActivity {
         mContext = this;
 
         fetchfrominternet();
-        adapter = new HistoryTransaksiAdapter(this, historyTransaksi);
+        adapter = new HistoryTransaksiAdapter(this, commonTransaksiList);
         recyclerview.setAdapter(adapter);
 
 
     }
 
     private void fetchfrominternet() {
-
         pDialog = new ProgressDialog(this);
         //  pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setMessage("Loading");
@@ -62,17 +62,21 @@ public class HistoryTransaksiActivity extends AppCompatActivity {
         // pDialog.setIndeterminate(false);
         pDialog.show();
 
-        final Call<ResponTransaksi> datatransaksi = client.getApi().gethistorytransaksi(Prefs.getString(SPref.getId(), null));
-        datatransaksi.enqueue(new Callback<ResponTransaksi>() {
+        final Call<ResponTransaksi> postdatatransaksi = client.getApi().gettransaksi(Prefs.getString(SPref.getId(), null));
+        postdatatransaksi.enqueue(new Callback<ResponTransaksi>() {
             @Override
             public void onResponse(Call<ResponTransaksi> call, Response<ResponTransaksi> response) {
                 pDialog.hide();
                 if (response.isSuccessful()) {
                     responTransaksi = response.body();
                     System.out.println("data user " + response.code());
-                    historyTransaksi.addAll(responTransaksi.getData());
-                    Collections.reverse(historyTransaksi);
+                    commonTransaksiList.clear();
+                    commonTransaksiList.addAll(responTransaksi.getData());
+                    System.out.println("data user " + responTransaksi.getData());
                     adapter.notifyDataSetChanged();
+
+                  /*  Collections.reverse(historyTransaksi);
+                    adapter.notifyDataSetChanged();*/
 
                 } else {
                     Toasty.error(mContext, "Username dan password salah", Toast.LENGTH_LONG).show();
@@ -82,7 +86,11 @@ public class HistoryTransaksiActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponTransaksi> call, Throwable t) {
-
+                pDialog.hide();
+                Toasty.error(mContext, "Koneksi Tidak ada", Toast.LENGTH_LONG).show();
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+                System.out.println("data user" + t.getMessage());
             }
         });
 

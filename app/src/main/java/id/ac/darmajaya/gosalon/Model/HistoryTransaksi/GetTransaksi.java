@@ -1,33 +1,50 @@
-package id.ac.darmajaya.gosalon.Model.Transaksi;
+package id.ac.darmajaya.gosalon.Model.HistoryTransaksi;
 
-public class DataTransaksi {
+import java.util.List;
 
+public class GetTransaksi {
+    private String id;
     private String id_user;
     private String id_toko;
-    private String id_produk;
     private String id_karyawan;
     private String nama;
     private String alamat;
     private String telp;
     private String kordinat;
     private String waktu_pemesanan;
+    private String waktu_pengerjaan;
+    private String foto_bukti;
+    private String keterangan;
     private String status;
+    private List<GetTransaksiProdukList> produk;
 
-
-    public DataTransaksi(String id_user, String id_toko, String id_produk, String id_karyawan, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String status) {
+    public GetTransaksi(String id, String id_user, String id_toko, String id_karyawan, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String waktu_pengerjaan, String foto_bukti, String keterangan, String status, List<GetTransaksiProdukList> produk) {
+        this.id = id;
         this.id_user = id_user;
         this.id_toko = id_toko;
-        this.id_produk = id_produk;
         this.id_karyawan = id_karyawan;
         this.nama = nama;
         this.alamat = alamat;
         this.telp = telp;
         this.kordinat = kordinat;
         this.waktu_pemesanan = waktu_pemesanan;
+        this.waktu_pengerjaan = waktu_pengerjaan;
+        this.foto_bukti = foto_bukti;
+        this.keterangan = keterangan;
         this.status = status;
+        this.produk = produk;
     }
 
+    public GetTransaksi() {
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getId_user() {
         return id_user;
@@ -43,14 +60,6 @@ public class DataTransaksi {
 
     public void setId_toko(String id_toko) {
         this.id_toko = id_toko;
-    }
-
-    public String getId_produk() {
-        return id_produk;
-    }
-
-    public void setId_produk(String id_produk) {
-        this.id_produk = id_produk;
     }
 
     public String getId_karyawan() {
@@ -101,11 +110,43 @@ public class DataTransaksi {
         this.waktu_pemesanan = waktu_pemesanan;
     }
 
+    public String getWaktu_pengerjaan() {
+        return waktu_pengerjaan;
+    }
+
+    public void setWaktu_pengerjaan(String waktu_pengerjaan) {
+        this.waktu_pengerjaan = waktu_pengerjaan;
+    }
+
+    public String getFoto_bukti() {
+        return foto_bukti;
+    }
+
+    public void setFoto_bukti(String foto_bukti) {
+        this.foto_bukti = foto_bukti;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<GetTransaksiProdukList> getProduk() {
+        return produk;
+    }
+
+    public void setProduk(List<GetTransaksiProdukList> produk) {
+        this.produk = produk;
     }
 }

@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CartActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -44,10 +43,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HistoryTransaksiActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="History Transaksi"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MapsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DetailPesanan">
+
+        </activity>
+        <activity android:name=".CartActivity" />
+
 
         <meta-data
             android:name="preloaded_fonts"
