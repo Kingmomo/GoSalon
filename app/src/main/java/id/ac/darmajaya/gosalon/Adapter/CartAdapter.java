@@ -25,7 +25,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     Context context;
     List<DataProduk> dataProduks;
-    OnDataChangeListener mOnDataChangeListener;
+    private OnDataChangeListener mOnDataChangeListener;
     private MySharedPreference sharedPreference;
     private int cartProductNumber = 0;
 
@@ -100,7 +100,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     public interface OnDataChangeListener {
         public void onDataChanged(int size);
-
         public void onDataVerify(Boolean cek);
     }
 
@@ -122,7 +121,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             totalCost = totalCost + Integer.parseInt(pObject.getHarga_produk());
         }
         return totalCost;
-
 
     }
 

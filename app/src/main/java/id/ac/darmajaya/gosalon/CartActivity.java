@@ -48,7 +48,7 @@ public class CartActivity extends AppCompatActivity {
         checkRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(CartActivity.this));
 
         // get content of cart
-        MySharedPreference mShared = new MySharedPreference(CartActivity.this);
+        final MySharedPreference mShared = new MySharedPreference(CartActivity.this);
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -70,6 +70,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent shoppingIntent = new Intent(CartActivity.this, TransaksiActivity.class);
+                mShared.addTotalHarga(mSubTotal);
                 startActivity(shoppingIntent);
             }
         });

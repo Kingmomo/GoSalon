@@ -1,6 +1,7 @@
 package id.ac.darmajaya.gosalon;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog pDialog;
     private Context mContext;
     private TextView name;
+    private Dialog MyDialog;
+    private Button close;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +141,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this, HistoryTransaksiActivity.class));
         } else if (id == R.id.nav_logout) {
             dialog();
-
+        } else if (id == R.id.tentang_app) {
+            MyCustomAlertDialog();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -162,5 +169,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create the AlertDialog object and return it
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void MyCustomAlertDialog() {
+        MyDialog = new Dialog(MainActivity.this);
+        MyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        MyDialog.setContentView(R.layout.tentang_aplikasi);
+        MyDialog.setTitle("My Custom Dialog");
+
+        close = (Button) MyDialog.findViewById(R.id.close);
+        close.setEnabled(true);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDialog.cancel();
+            }
+        });
+        MyDialog.show();
     }
 }

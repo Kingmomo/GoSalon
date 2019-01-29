@@ -34,4 +34,16 @@ public class MySharedPreference {
     public int retrieveProductCount(){
        return prefs.getInt(Constants.PRODUCT_COUNT, 0);
     }
+
+    public void addTotalHarga(int totalharga){
+        SharedPreferences.Editor edits = prefs.edit();
+        edits.putInt(Constants.TOTAL_HARGA, totalharga);
+        edits.apply();
+    }
+
+    public int retrieveTotalHarga(){
+        return prefs.getInt(Constants.TOTAL_HARGA, 0);
+
+    }
+
 }

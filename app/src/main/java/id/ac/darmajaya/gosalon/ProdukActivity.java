@@ -44,8 +44,7 @@ public class ProdukActivity extends AppCompatActivity {
     private ProdukAdapter adapter;
     private RecyclerView recyclerview;
     private MySharedPreference sharedPreference;
-    private Gson gson;
-    private int cartProductNumber = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,10 +53,7 @@ public class ProdukActivity extends AppCompatActivity {
         mContext = this;
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
 
-        sharedPreference = new MySharedPreference(ProdukActivity.this);
-        GsonBuilder builder = new GsonBuilder();
-        gson = builder.create();
-
+        sharedPreference = new MySharedPreference(this);
 
       /*  GridLayoutManager  gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanCount(2);

@@ -17,7 +17,9 @@
         <ImageView
             android:id="@+id/gambar"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
+            android:paddingLeft="@dimen/spacing_large"
+            android:paddingRight="@dimen/spacing_large"
             android:scaleType="fitXY"
             android:src="@color/colorPrimaryDark" />
 

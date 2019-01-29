@@ -12,9 +12,11 @@ import java.util.List;
 
 import id.ac.darmajaya.gosalon.DetailPesanan;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.GetTransaksiProdukList;
+import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
 import id.ac.darmajaya.gosalon.R;
 
 public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdapter.MyViewHolder> {
+    private OnDataChangeListener mOnDataChangeListener;
     private Context context;
     private List<GetTransaksiProdukList> getTransaksiProdukListList;
 
@@ -38,7 +40,7 @@ public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdap
         holder.namatoko.setText(getTransaksiProdukList.getWaktu_pengerjaan());
         holder.hargaproduk.setText(getTransaksiProdukList.getHarga_produk());
 
-
+        doButtonOneClickActions(getTransaksiProdukListList);
 
     }
 
@@ -46,6 +48,8 @@ public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdap
     public int getItemCount() {
         return getTransaksiProdukListList.size();
     }
+
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private View view;
@@ -60,5 +64,30 @@ public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdap
 
 
         }
+    }
+
+    public interface OnDataChangeListener {
+        public void onDataChanged(int totalharga);
+    }
+
+
+    public void setTotalhargaChanged(OnDataChangeListener onDataChangeListener) {
+        mOnDataChangeListener = onDataChangeListener;
+    }
+
+    private void doButtonOneClickActions(List<GetTransaksiProdukList> mProducts) {
+        if (mOnDataChangeListener != null) {
+            mOnDataChangeListener.onDataChanged(getTotalPrice(mProducts));
+        }
+    }
+
+    private int getTotalPrice(List<GetTransaksiProdukList> mProducts) {
+        int totalCost = 0;
+        for (int i = 0; i < mProducts.size(); i++) {
+            GetTransaksiProdukList pObject = mProducts.get(i);
+            totalCost = totalCost + Integer.parseInt(pObject.getHarga_produk());
+        }
+        return totalCost;
+
     }
 }

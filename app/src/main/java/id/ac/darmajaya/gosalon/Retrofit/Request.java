@@ -15,8 +15,6 @@ import retrofit2.http.Query;
 
 public interface Request {
 
-
-
     @GET("user/login.php")
     Call<ResponseLogin> getresponauth(@Query("email")String email, @Query("password") String password);
 

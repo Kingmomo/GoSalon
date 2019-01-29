@@ -25,12 +25,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Model.HistoryTransaksi.ResponTransaksi;
@@ -50,13 +52,14 @@ public class TransaksiActivity extends AppCompatActivity {
     private int currentMinute, currentHour;
     private TimePickerDialog timePickerDialog;
     private CheckBox combobox;
-    private EditText nama, alamat, notelp, paket, harga, koordinat, edDate, edClock;
+    private EditText nama, alamat, notelp, harga, koordinat, edDate, edClock;
     private Button btntranskasi;
     private DatePickerDialog mDatePickerDialog;
     private ProgressBar progress_bar;
     private ProgressDialog pDialog;
     private Context mContext;
     private int MAP = 2;
+    private MySharedPreference mySharedPreference;
 
     public static void dismissKeyboard(EditText editText, Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -71,7 +74,6 @@ public class TransaksiActivity extends AppCompatActivity {
         nama = (EditText) findViewById(R.id.nama);
         alamat = (EditText) findViewById(R.id.alamat);
         notelp = (EditText) findViewById(R.id.notelp);
-        paket = (EditText) findViewById(R.id.paket);
         harga = (EditText) findViewById(R.id.harga);
         edDate = (EditText) findViewById(R.id.date);
         koordinat = (EditText) findViewById(R.id.koordinat);
@@ -79,11 +81,12 @@ public class TransaksiActivity extends AppCompatActivity {
         btntranskasi = (Button) findViewById(R.id.btntransaksi);
 
         mContext = this;
-        final SharedPreferences spref = getApplicationContext().getSharedPreferences("TransaksiSalon", MODE_PRIVATE);
-        paket.setText(spref.getString("namaproduk", null));
-        harga.setText(spref.getString("harga", null));
+        mySharedPreference = new MySharedPreference(this);
+        Locale localeID = new Locale("in", "ID");
+        final NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        harga.setText((formatRupiah.format(Integer.parseInt(String.valueOf(mySharedPreference.retrieveTotalHarga())))));
 
-        paket.setEnabled(false);
+
         harga.setEnabled(false);
         combobox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
