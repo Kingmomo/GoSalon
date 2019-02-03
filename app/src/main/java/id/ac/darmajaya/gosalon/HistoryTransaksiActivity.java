@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -72,6 +73,7 @@ public class HistoryTransaksiActivity extends AppCompatActivity {
                     System.out.println("data user " + response.code());
                     commonTransaksiList.clear();
                     commonTransaksiList.addAll(responTransaksi.getData());
+                    Collections.reverse(commonTransaksiList);
                     System.out.println("data user " + responTransaksi.getData());
                     adapter.notifyDataSetChanged();
 

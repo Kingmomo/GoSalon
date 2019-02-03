@@ -203,7 +203,6 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="@color/colorPrimary"
-                android:onClick="onClick"
                 android:text="Konfirmasi Order"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />

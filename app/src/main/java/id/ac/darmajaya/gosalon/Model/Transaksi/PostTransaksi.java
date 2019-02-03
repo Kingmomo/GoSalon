@@ -11,7 +11,6 @@ public class PostTransaksi {
     private String id_toko;
     @SerializedName("produk")
     private List<ListProduk> listproduk;
-    private String id_karyawan;
     private String nama;
     private String alamat;
     private String telp;
@@ -19,13 +18,11 @@ public class PostTransaksi {
     private String waktu_pemesanan;
     private String status;
 
-
-    public PostTransaksi(String idtransaksi, String id_user, String id_toko, List<ListProduk> listproduk, String id_karyawan, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String status) {
+    public PostTransaksi(String idtransaksi, String id_user, String id_toko, List<ListProduk> listproduk, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String status) {
         this.idtransaksi = idtransaksi;
         this.id_user = id_user;
         this.id_toko = id_toko;
         this.listproduk = listproduk;
-        this.id_karyawan = id_karyawan;
         this.nama = nama;
         this.alamat = alamat;
         this.telp = telp;
@@ -64,14 +61,6 @@ public class PostTransaksi {
 
     public void setListproduk(List<ListProduk> listproduk) {
         this.listproduk = listproduk;
-    }
-
-    public String getId_karyawan() {
-        return id_karyawan;
-    }
-
-    public void setId_karyawan(String id_karyawan) {
-        this.id_karyawan = id_karyawan;
     }
 
     public String getNama() {

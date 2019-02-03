@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView name;
     private Dialog MyDialog;
     private Button close;
+    private ProgressBar progress_bar;
+
 
 
     @Override

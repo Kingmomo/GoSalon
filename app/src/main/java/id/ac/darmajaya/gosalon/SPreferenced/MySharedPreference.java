@@ -46,4 +46,9 @@ public class MySharedPreference {
 
     }
 
+    public void deletedata(){
+        SharedPreferences.Editor edits = prefs.edit();
+        edits.clear().commit();
+    }
+
 }

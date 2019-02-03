@@ -60,7 +60,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+//            getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -71,6 +71,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         }
+        LatLng peta = new LatLng(-5.4219919, 105.2590389);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(peta, 15f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -110,7 +112,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         mapFragment.getMapAsync(MapsActivity.this);
     }
 

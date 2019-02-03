@@ -161,7 +161,7 @@ public class TransaksiActivity extends AppCompatActivity {
         String tanggaldate;
         tanggaldate = edDate.getText().toString() + " " + edClock.getText().toString();
 
-        MySharedPreference mShared = new MySharedPreference(TransaksiActivity.this);
+        final MySharedPreference mShared = new MySharedPreference(TransaksiActivity.this);
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -182,7 +182,6 @@ public class TransaksiActivity extends AppCompatActivity {
                 Prefs.getString(SPref.getId(), null),
                 productList.get(0).getId_toko(),
                 list,
-                productList.get(0).getId_toko(),
                 nama.getText().toString(),
                 alamat.getText().toString(),
                 notelp.getText().toString(),
@@ -201,6 +200,7 @@ public class TransaksiActivity extends AppCompatActivity {
                     System.out.println("Transaksi Sukses " + response.code());
                     Toasty.success(mContext, "Transaksi Berhasil", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(TransaksiActivity.this, MainActivity.class));
+                    mShared.deletedata();
                     finish();
 
 

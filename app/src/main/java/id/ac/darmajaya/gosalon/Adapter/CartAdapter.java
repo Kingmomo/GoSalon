@@ -83,8 +83,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         });
         doButtonOneClickActions(dataProduks);
 
-
-
     }
 
     @Override
@@ -181,4 +179,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             namatoko = (TextView) itemView.findViewById(R.id.namatoko);
         }
     }
+
+
+
+
+
 }

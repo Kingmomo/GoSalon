@@ -90,4 +90,26 @@ public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdap
         return totalCost;
 
     }
+    private String getstatus(int status) {
+        String statuspesanan;
+        switch (status) {
+            case 0:
+                statuspesanan = "Pesanan Belum Diproses";
+                break;
+            case 1:
+                statuspesanan = "Pesanan Sudah Diproses";
+                break;
+            case 2:
+                statuspesanan = "Pesanan Sedang Dikerjakan oleh Karyawaan";
+                break;
+            case 3:
+                statuspesanan = "Pesanan Selesai";
+                break;
+            default:
+                statuspesanan = "Invalid";
+                break;
+
+        }
+        return statuspesanan;
+    }
 }
