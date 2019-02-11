@@ -66,8 +66,8 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
             holder.btn_konfirmasi.setText("Belum Dikonfirmasi Admin");
         } else if (historyTransaksi1.getStatus().equals("1")) {
             holder.btn_konfirmasi.setEnabled(false);
-            holder.btn_konfirmasi.setText("Belum Dikonfirmasi Karyawan");
-            holder.btn_konfirmasi.setBackgroundColor(context.getResources().getColor(R.color.grey_40));
+            holder.btn_konfirmasi.setText("Sudah Dikonfirmasi Karyawan");
+            holder.btn_konfirmasi.setBackgroundColor(context.getResources().getColor(R.color.yellow_400));
         } else if (historyTransaksi1.getStatus().equals("2")) {
             holder.btn_konfirmasi.setEnabled(true);
             holder.btn_konfirmasi.setText("Konfirmasi Transaksi");

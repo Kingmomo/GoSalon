@@ -39,7 +39,7 @@
             android:name=".TransaksiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TentangActivity"
+            android:name=".TentangSalonActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HistoryTransaksiActivity"

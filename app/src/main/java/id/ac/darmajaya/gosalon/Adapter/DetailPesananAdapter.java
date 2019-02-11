@@ -50,7 +50,6 @@ public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdap
     }
 
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private View view;
         private TextView namaproduk, namatoko, hargaproduk;
@@ -90,6 +89,7 @@ public class DetailPesananAdapter extends RecyclerView.Adapter<DetailPesananAdap
         return totalCost;
 
     }
+
     private String getstatus(int status) {
         String statuspesanan;
         switch (status) {

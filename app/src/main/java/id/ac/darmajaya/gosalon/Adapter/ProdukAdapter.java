@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -65,7 +66,16 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
                 .error(R.mipmap.ic_launcher_round);
 
 
-        Glide.with(context).load(dataProduk.getFoto_produk()).apply(options).into(myViewHolder.gambar);
+
+        Glide.with(context)
+                .load("http://"+dataProduk.getFoto_produk())
+                .apply(
+                        new RequestOptions()
+                                .placeholder(R.color.pink_200)
+                                .fitCenter())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(myViewHolder.gambar);
+
 
         myViewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override

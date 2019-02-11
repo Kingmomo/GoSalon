@@ -98,6 +98,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     public interface OnDataChangeListener {
         public void onDataChanged(int size);
+
         public void onDataVerify(Boolean cek);
     }
 
@@ -179,9 +180,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             namatoko = (TextView) itemView.findViewById(R.id.namatoko);
         }
     }
-
-
-
 
 
 }

@@ -22,9 +22,7 @@
             <ImageView
                 android:id="@+id/gambatoko"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/item_toko" />
+                android:layout_height="200dp" />
 
             <TextView
                 android:id="@+id/namatoko"

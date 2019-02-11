@@ -25,7 +25,7 @@
             app:titleEnabled="false">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/gambartoko"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -48,6 +48,7 @@
 
 
                 <TextView
+                    android:id="@+id/namasalon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Salon Bla bla bla"
@@ -94,10 +95,20 @@
 
 
             <TextView
+                android:id="@+id/pemilik"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_large"
-                android:text="@string/pengertian"
+                android:text="Pemilik"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/grey_80" />
+
+            <TextView
+                android:id="@+id/alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_large"
+                android:text="Alamat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/grey_80" />
 
