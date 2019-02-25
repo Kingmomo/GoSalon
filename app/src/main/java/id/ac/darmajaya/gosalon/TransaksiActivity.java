@@ -176,12 +176,12 @@ public class TransaksiActivity extends AppCompatActivity {
         }
         long millis = new Date().getTime();
 
-
         PostTransaksi dataTransaksi = new PostTransaksi(
-                String.valueOf(millis),
+                String.valueOf(millis).substring(0, 8),
                 Prefs.getString(SPref.getId(), null),
                 productList.get(0).getId_toko(),
                 list,
+                null,
                 nama.getText().toString(),
                 alamat.getText().toString(),
                 notelp.getText().toString(),
