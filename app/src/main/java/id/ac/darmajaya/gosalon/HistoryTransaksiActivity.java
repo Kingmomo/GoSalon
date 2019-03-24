@@ -3,7 +3,9 @@ package id.ac.darmajaya.gosalon;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +36,8 @@ public class HistoryTransaksiActivity extends AppCompatActivity {
     private ResponTransaksi responTransaksi;
     private ProgressDialog pDialog;
     private Context mContext;
+    private SwipeRefreshLayout swipeLayout;
+
 
 
     @Override
@@ -41,17 +45,40 @@ public class HistoryTransaksiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_transaksi);
 
-
+        swipeLayout = findViewById(R.id.swipe_container);
         recyclerview = findViewById(R.id.recyclerview);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerview.setNestedScrollingEnabled(false);
         mContext = this;
 
+
         fetchfrominternet();
         adapter = new HistoryTransaksiAdapter(this, commonTransaksiList);
         recyclerview.setAdapter(adapter);
 
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code here
+                fetchfrominternet();
+                // To keep animation for 2 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        // Stop animation (This will be after 3 seconds)
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 2000); // Delay in millis
+            }
+        });
+
+        swipeLayout.setColorSchemeColors(
+                getResources().getColor(android.R.color.holo_blue_bright),
+                getResources().getColor(android.R.color.holo_green_light),
+                getResources().getColor(android.R.color.holo_orange_light),
+                getResources().getColor(android.R.color.holo_red_light)
+
+        );
 
     }
 

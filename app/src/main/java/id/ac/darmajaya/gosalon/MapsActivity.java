@@ -2,6 +2,7 @@ package id.ac.darmajaya.gosalon;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -30,6 +31,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import es.dmoral.toasty.Toasty;
+import id.ac.darmajaya.gosalon.Model.Toko.DataToko;
+import id.ac.darmajaya.gosalon.Model.Toko.ResponseToko;
+import id.ac.darmajaya.gosalon.Retrofit.client;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "hahahaha";
@@ -39,10 +51,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final float DEFAULT_ZOOM = 15f;
     private Button btnmaps;
     private GoogleMap mMap;
+    private ProgressDialog pDialog;
     private Boolean mLocationPermissionsGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LatLng garageLocation;
     private Marker marker;
+    private List<DataToko> dataTokos = new ArrayList<>();
+    private ResponseToko responseToko;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,11 +69,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getLocationPermission();
 
 
+
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        fetchfrominternet();
 
         if (mLocationPermissionsGranted) {
 //            getDeviceLocation();
@@ -72,7 +91,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
         LatLng peta = new LatLng(-5.4219919, 105.2590389);
+
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(peta, 15f));
+
+
+
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -109,6 +132,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
+    private void fetchfrominternet() {
+
+        Call<ResponseToko> user = client.getApi().getdatatoko();
+        user.enqueue(new Callback<ResponseToko>() {
+            @Override
+            public void onResponse(Call<ResponseToko> call, Response<ResponseToko> response) {
+                if (response.isSuccessful()) {
+                    responseToko = response.body();
+                    dataTokos.addAll(responseToko.getData());
+                    for(int i = 0; i < dataTokos.size(); i++){
+                        String[] koordinat = dataTokos.get(i).getKordinat().split(",");
+                        LatLng latLng = new LatLng(Double.parseDouble(koordinat[0]), Double.parseDouble(koordinat[1]));
+                        System.out.println("kordinat " + koordinat[0] +"," + koordinat[1]);
+                        MarkerOptions options = new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .position(latLng)
+                                .title(dataTokos.get(i).getNama_toko());
+                        marker = mMap.addMarker(options);
+                    }
+
+                } else {
+                    Toasty.error(getApplicationContext(), "Data Tidak ditemukan", Toast.LENGTH_LONG).show();
+                    System.out.println("data user " + response.code());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseToko> call, Throwable t) {
+                Toasty.error(getApplicationContext(), "Koneksi Tidak ada", Toast.LENGTH_LONG).show();
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+                System.out.println("data user" + t.getMessage());
+
+            }
+        });
+    }
+
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

@@ -6,8 +6,19 @@ public class DataToko {
     private String id_admin;
     private String nama_toko;
     private String alamat_toko;
+    private String kordinat;
     private String pemilik;
     private String foto_toko;
+
+    public DataToko(String id, String id_admin, String nama_toko, String alamat_toko, String kordinat, String pemilik, String foto_toko) {
+        this.id = id;
+        this.id_admin = id_admin;
+        this.nama_toko = nama_toko;
+        this.alamat_toko = alamat_toko;
+        this.kordinat = kordinat;
+        this.pemilik = pemilik;
+        this.foto_toko = foto_toko;
+    }
 
     public String getId() {
         return id;
@@ -39,6 +50,14 @@ public class DataToko {
 
     public void setAlamat_toko(String alamat_toko) {
         this.alamat_toko = alamat_toko;
+    }
+
+    public String getKordinat() {
+        return kordinat;
+    }
+
+    public void setKordinat(String kordinat) {
+        this.kordinat = kordinat;
     }
 
     public String getPemilik() {

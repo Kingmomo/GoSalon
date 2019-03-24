@@ -57,6 +57,7 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
         holder.notelp.setText(historyTransaksi1.getTelp());
         holder.waktu.setText(res[1]);
         holder.tanggal.setText(res[0]);
+        holder.tanggal.setText(historyTransaksi1.getNama_toko());
         holder.status.setText(getstatus(Integer.parseInt(historyTransaksi1.getStatus())));
         holder.sort.setText("Pesanan No " + historyTransaksi1.getId());
 
@@ -96,8 +97,6 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
                 context.startActivity(intent);
             }
         });
-
-
     }
 
     @Override
@@ -107,7 +106,7 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private View view;
-        private TextView nama, notelp, waktu, tanggal, status, sort;
+        private TextView nama, notelp, waktu, tanggal, status, sort, namatoko;
         private Button btn_konfirmasi;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -119,6 +118,7 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
             tanggal = view.findViewById(R.id.tanggal);
             status = view.findViewById(R.id.status);
             sort = view.findViewById(R.id.sort);
+            namatoko = view.findViewById(R.id.namatoko);
             btn_konfirmasi = view.findViewById(R.id.btn_konfirmasi);
 
         }
@@ -168,10 +168,8 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
 
             @Override
             public void onFailure(Call<ResponseSelesai> call, Throwable t) {
-                pDialog.hide();
-                Toasty.error(context, "Koneksi Tidak ada", Toast.LENGTH_LONG).show();
-
-
+                    pDialog.hide();
+                    Toasty.error(context, "Koneksi Tidak ada", Toast.LENGTH_LONG).show();
             }
         });
 

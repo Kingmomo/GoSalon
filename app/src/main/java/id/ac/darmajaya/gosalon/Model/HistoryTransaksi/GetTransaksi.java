@@ -16,9 +16,10 @@ public class GetTransaksi {
     private String foto_bukti;
     private String keterangan;
     private String status;
+    private String nama_toko;
     private List<GetTransaksiProdukList> produk;
 
-    public GetTransaksi(String id, String id_user, String id_toko, String id_karyawan, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String waktu_pengerjaan, String foto_bukti, String keterangan, String status, List<GetTransaksiProdukList> produk) {
+    public GetTransaksi(String id, String id_user, String id_toko, String id_karyawan, String nama, String alamat, String telp, String kordinat, String waktu_pemesanan, String waktu_pengerjaan, String foto_bukti, String keterangan, String status, String nama_toko, List<GetTransaksiProdukList> produk) {
         this.id = id;
         this.id_user = id_user;
         this.id_toko = id_toko;
@@ -32,10 +33,8 @@ public class GetTransaksi {
         this.foto_bukti = foto_bukti;
         this.keterangan = keterangan;
         this.status = status;
+        this.nama_toko = nama_toko;
         this.produk = produk;
-    }
-
-    public GetTransaksi() {
     }
 
     public String getId() {
@@ -140,6 +139,14 @@ public class GetTransaksi {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getNama_toko() {
+        return nama_toko;
+    }
+
+    public void setNama_toko(String nama_toko) {
+        this.nama_toko = nama_toko;
     }
 
     public List<GetTransaksiProdukList> getProduk() {
