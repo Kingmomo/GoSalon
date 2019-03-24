@@ -55,7 +55,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean mLocationPermissionsGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LatLng garageLocation;
-    private Marker marker;
+    private Marker marker, marker2;
     private List<DataToko> dataTokos = new ArrayList<>();
     private ResponseToko responseToko;
 
@@ -67,8 +67,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnmaps = findViewById(R.id.btnmap);
         getLocationPermission();
-
-
+        Toasty.info(getApplicationContext(), "Tentukan Lokasi User", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -94,28 +93,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(peta, 15f));
 
-
-
-
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                mMap.clear();
+                marker2.remove();
                 garageLocation = latLng;
                 moveCamera(latLng, DEFAULT_ZOOM);
             }
         });
 
-
-
         btnmaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                intent.putExtra("location_lat", garageLocation.latitude);
-                intent.putExtra("location_lng", garageLocation.longitude);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+                if (garageLocation == null){
+                    Toasty.info(getApplicationContext(), "Tentukan Lokasi User", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = getIntent();
+                    intent.putExtra("location_lat", garageLocation.latitude);
+                    intent.putExtra("location_lng", garageLocation.longitude);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
             }
         });
     }
@@ -127,9 +125,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                 .position(latLng)
                 .title("Lokasi Saya");
-        marker = mMap.addMarker(options);
-
-
+        marker2 = mMap.addMarker(options);
 
     }
 
@@ -147,10 +143,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         LatLng latLng = new LatLng(Double.parseDouble(koordinat[0]), Double.parseDouble(koordinat[1]));
                         System.out.println("kordinat " + koordinat[0] +"," + koordinat[1]);
                         MarkerOptions options = new MarkerOptions()
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                                 .position(latLng)
                                 .title(dataTokos.get(i).getNama_toko());
-                        marker = mMap.addMarker(options);
+                        marker2 = mMap.addMarker(options);
                     }
 
                 } else {
@@ -214,7 +210,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Location currentLocation = (Location) task.getResult();
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM));
                             MarkerOptions options = new MarkerOptions()
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                                     .position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
                                     .title("Lokasi Saya");
                             mMap.addMarker(options);
