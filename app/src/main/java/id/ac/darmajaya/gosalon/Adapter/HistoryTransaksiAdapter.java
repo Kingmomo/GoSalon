@@ -57,7 +57,7 @@ public class HistoryTransaksiAdapter extends RecyclerView.Adapter<HistoryTransak
         holder.notelp.setText(historyTransaksi1.getTelp());
         holder.waktu.setText(res[1]);
         holder.tanggal.setText(res[0]);
-        holder.tanggal.setText(historyTransaksi1.getNama_toko());
+        holder.namatoko.setText(historyTransaksi1.getNama_toko());
         holder.status.setText(getstatus(Integer.parseInt(historyTransaksi1.getStatus())));
         holder.sort.setText("Pesanan No " + historyTransaksi1.getId());
 
