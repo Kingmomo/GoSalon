@@ -3,4 +3,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="pengertian">Salon adalah tempat yang sering didatangi para keturunan hawa sebagai tempat mempercantik diri sekaligus meningkatkan suasana hati. Di sinilah para wanita biasa dimanjakan dan diberi layanan yang memuaskan mereka tanpa membuat mereka repot. Spa sangat cocok untuk orang yang mengalami stress dari kegiatan sehari hari. Saat perawatan spa, Anda akan merasakan seperti penat yang ada hilang dan relaks, suasana yang tenang dan diiringi alunan musik santai akan menghapuskan letih badan dan menjernihkan pikiran. Perawatan spa sangat penting bagi mereka yang memiliki tingkat kesibukkan sangat tinggi setiap harinya.  </string>
+
+
+    <string name="pemesanan">
+        Cara order karangan bunga: \n
+1. Pilih menu pesan.\n 2. Tap dan pilih lokasi pengiriman.\n 3. Pada halaman daftar toko bunga, pengguna bisa melihat jarak toko bunga terdekat bedasarkan jarak radius dari posisi pengiriman bunga.\n4. Pilih daftar paket karangan bunga.\n5. Lakukan pembelian jika pengguna ingin memesan karangan bunga.\n6. Isi form pemesanan lalu lakukan proses pembayaran dan konfirmasi melalui telfon atau WhatsApp.
+    </string>
+
 </resources>

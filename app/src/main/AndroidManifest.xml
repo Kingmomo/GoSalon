@@ -52,8 +52,12 @@
         <activity android:name=".DetailPesanan">
 
         </activity>
-        <activity android:name=".CartActivity" />
-
+        <activity
+            android:name=".CartActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PetunjukActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"

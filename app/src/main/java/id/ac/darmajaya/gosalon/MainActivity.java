@@ -146,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialog();
         } else if (id == R.id.tentang_app) {
             MyCustomAlertDialog();
+        } else if (id == R.id.petunjuk) {
+            startActivity(new Intent(getApplicationContext(), PetunjukActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.v7.widget.Toolbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,6 +23,7 @@ import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Adapter.CartAdapter;
 import id.ac.darmajaya.gosalon.Model.Produk.DataProduk;
 import id.ac.darmajaya.gosalon.SPreferenced.MySharedPreference;
+import id.ac.darmajaya.gosalon.SPreferenced.SharedPrefToko;
 import id.ac.darmajaya.gosalon.utils.SimpleDividerItemDecoration;
 
 public class CartActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView checkRecyclerView;
     private TextView subTotal;
     private int mSubTotal = 0;
-
+    private SharedPrefToko sharedPrefToko;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,11 @@ public class CartActivity extends AppCompatActivity {
 
         subTotal = (TextView) findViewById(R.id.sub_total);
         checkRecyclerView = (RecyclerView) findViewById(R.id.checkout_list);
+        sharedPrefToko = new SharedPrefToko(this);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        myToolbar.setTitle(sharedPrefToko.GetAddNamToko());
+        setSupportActionBar(myToolbar);
 
 
 

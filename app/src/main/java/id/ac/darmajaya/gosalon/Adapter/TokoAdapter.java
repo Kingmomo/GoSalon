@@ -23,11 +23,15 @@ import es.dmoral.toasty.Toasty;
 import id.ac.darmajaya.gosalon.Model.Toko.DataToko;
 import id.ac.darmajaya.gosalon.ProdukActivity;
 import id.ac.darmajaya.gosalon.R;
+import id.ac.darmajaya.gosalon.SPreferenced.MySharedPreference;
+import id.ac.darmajaya.gosalon.SPreferenced.SharedPrefToko;
 import id.ac.darmajaya.gosalon.TentangSalonActivity;
 
 public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.MyViewHolder> {
     private Context context;
     private List<DataToko> dataTokos;
+    private SharedPrefToko sharedPreference;
+
 
     public TokoAdapter(Context context, List<DataToko> dataTokos) {
         this.context = context;
@@ -46,6 +50,7 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         final DataToko dataToko = dataTokos.get(position);
         myViewHolder.namatoko.setText(dataToko.getNama_toko());
+
 
         Glide.with(context)
                 .load("http://" + dataToko.getFoto_toko())
@@ -97,6 +102,9 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.MyViewHolder> 
                     Intent intent = new Intent(context, ProdukActivity.class);
                     intent.putExtra("ID", dataTokos.get(getAdapterPosition()).getId());
                     btn_pesan.getContext().startActivity(intent);
+                    sharedPreference = new SharedPrefToko(context);
+                    sharedPreference.deletedata();
+                    sharedPreference.SetNamToko(dataTokos.get(getAdapterPosition()).getNama_toko());
 //                    Toasty.success(context, dataTokos.get(getAdapterPosition()).getId(), Toast.LENGTH_LONG).show();
                 }
             });
